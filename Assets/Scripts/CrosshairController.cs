@@ -1,71 +1,80 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CrosshairController : MonoBehaviour
 {
-    public GameObject crosshair; // Ссылка на объект прицела
-    public float moveSpeed = 5f; // Скорость перемещения прицела
+    [SerializeField] private Crosshair crosshair;
+    [SerializeField] private List<Button> buttons;
+    private bool canControl;
 
-    private Vector3 targetPosition; // Целевая позиция прицела
-
-    void Start()
+    public void Initialize()
     {
-        // Инициализация начальной позиции прицела
-        targetPosition = crosshair.transform.position;
+        LockedControl();
+        GameManager.Instance.OnTaskFinished += UnlockedControl;
+        GameManager.Instance.OnTaskStarted += LockedControl;
     }
 
-    void Update()
+    private void LockedControl()
     {
-        // Плавное перемещение прицела к целевой позиции
-        crosshair.transform.position = Vector3.Lerp(crosshair.transform.position, targetPosition, Time.deltaTime * moveSpeed);
+        canControl = false;
+        foreach (var button in buttons)
+        {
+            button.interactable = false;
+        }
+    }
+
+    private void UnlockedControl()
+    {
+        canControl = true;
+        foreach (var button in buttons)
+        {
+            button.interactable = true;
+        }
     }
 
     public void MoveUp()
     {
-        targetPosition += Vector3.up;
-        ClampPosition();
+        if (!canControl) return;
+        crosshair.MoveUp();
     }
 
     public void MoveDown()
     {
-        targetPosition += Vector3.down;
-        ClampPosition();
+        if (!canControl) return;
+        crosshair.MoveDown();
     }
 
     public void MoveLeft()
     {
-        targetPosition += Vector3.left;
-        ClampPosition();
+        if (!canControl) return;
+        crosshair.MoveLeft();
     }
 
     public void MoveRight()
     {
-        targetPosition += Vector3.right;
-        ClampPosition();
-    }
-
-    private void ClampPosition()
-    {
-        // Ограничение по оси X и Y (установите свои значения)
-        targetPosition.x = Mathf.Clamp(targetPosition.x, -8f, 8f); // Границы по X
-        targetPosition.y = Mathf.Clamp(targetPosition.y, -4.5f, 4.5f); // Границы по Y
+        if (!canControl) return;
+        crosshair.MoveRight();
     }
     
-    // Метод для проверки планеты под прицелом
+    public event Action OnTruePlanetDestroy;
     public void Fire()
     {
-        // Создаем луч из позиции прицела
-        Vector2 rayDirection = Vector2.zero; // Направление луча (ноль, так как мы проверяем только точку)
-        RaycastHit2D hit = Physics2D.Raycast(crosshair.transform.position, rayDirection);
+        if (!canControl) return;
+        
+        var rayDirection = Vector2.zero; 
+        var hit = Physics2D.Raycast(crosshair.transform.position, rayDirection);
 
         if (hit.collider != null)
         {
             // Проверяем, попал ли луч в объект с компонентом PlanetInfo
-            PlanetInfo planetInfo = hit.collider.GetComponent<PlanetInfo>();
+            var planetInfo = hit.collider.GetComponent<PlanetInfo>();
             if (planetInfo != null)
             {
                 Debug.Log("Выбранная планета: " + planetInfo.GetPlanetName());
+                OnTruePlanetDestroy?.Invoke();
             }
             else
             {

@@ -12,17 +12,11 @@ public class Screen : MonoBehaviour
     public void Initialize()
     {
         GameManager.Instance.OnTaskStarted += StartTask;
+        GameManager.Instance.OnTaskFinished += FinishTask;
     }
     
     private void StartTask()
     {
-        symbols.Clear();
-        foreach (var slot in symbolSlots)
-        {
-            Destroy(slot.gameObject);
-        }
-        symbolSlots.Clear();
-        
         symbols = GameManager.Instance.CurrentTaskSymbols;
 
         for (int i = 0; i < symbols.Count; i++)
@@ -31,5 +25,15 @@ public class Screen : MonoBehaviour
             instance.Initialize(symbols[i], i);
             symbolSlots.Add(instance);
         }
+    }
+
+    private void FinishTask()
+    {
+        symbols.Clear();
+        foreach (var slot in symbolSlots)
+        {
+            Destroy(slot.gameObject);
+        }
+        symbolSlots.Clear();
     }
 }

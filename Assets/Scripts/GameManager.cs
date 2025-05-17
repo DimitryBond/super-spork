@@ -8,6 +8,7 @@ using UnityEngine;
 public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
 {
     [SerializeField] private SerializedDictionary<int, Task> tasks = new();
+    [SerializeField] private CrosshairController crosshairController;
     [SerializeField] private KeyBoard keyboard;
     [SerializeField] private ColorKeyBoard colorKeyBoard;
     [SerializeField] private Screen screen;
@@ -15,7 +16,19 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
     [SerializeField] private HintSystem hintSystem;
 
     [SerializeField] private DialogueData dialogueDatabase;
-    private bool isTaskActive = false;
+    
+    public event Action<bool> OnIsTaskActiveChanged;
+    private bool isTaskActive;
+    public bool IsTaskActive
+    {
+        get => isTaskActive;
+        set
+        {
+            if (value == isTaskActive) return;
+            isTaskActive = value;
+            OnIsTaskActiveChanged?.Invoke(value);
+        }
+    }
 
 
     public List<Symbol> CurrentTaskSymbols { get; private set; } = new();
@@ -59,22 +72,19 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
 
     private void Start()
     {
+        crosshairController.Initialize();
         colorKeyBoard.Initialize();
         keyboard.Initialize();
         screen.Initialize();
         canInput = true;
 
+        crosshairController.OnTruePlanetDestroy += StartTask;
         colorKeyBoard.OnKeyPressed += TryCompleteSymbol;
         keyboard.OnKeyPressed += TryCompleteSymbol;
         dialogSystem.ShowDialogue(dialogueDatabase.GetDialogue("task_0"));
-        isTaskActive = true;
+        IsTaskActive = true;
     }
-
-    public Task GetTask()
-    {
-        return tasks[CurrentTask];
-    }
-
+    
     public event Action OnTaskStarted; 
     public void StartTask()
     {
@@ -85,27 +95,20 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
         OnTaskStarted?.Invoke();
         var hints = dialogueDatabase.GetHints($"task_{CurrentTask}");
         hintSystem.ShowHints(hints);
-
     }
 
+    public event Action OnTaskFinished; 
     public void CompleteTask()
     {
         CurrentTask++;
-        if (tasks.ContainsKey(CurrentTask))
-        {
-            StartTask();
-        }
-        else
-        {
-            //Разблокировать огонь
-        }
-        isTaskActive = false;
         hintSystem.HideHints();
+        IsTaskActive = false;
+        OnTaskFinished?.Invoke();
     }
 
     public void NextDialogue()
     {
-        if (isTaskActive) return;
+        if (IsTaskActive) return;
 
         string id = $"task_{CurrentTask}";
         var dialogue = dialogueDatabase.GetDialogue(id);
@@ -119,8 +122,7 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
         var dialogue = dialogueDatabase.GetDialogue(endingId);
         dialogSystem.ShowDialogue(dialogue);
     }
-
-
+    
     private void NextSymbol()
     {
         CurrentSymbolIndex++;

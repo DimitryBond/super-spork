@@ -12,5 +12,14 @@ public enum Symbols
     RedButton,
     BlueButton,
     YellowButton,
-    GreenButton
+    GreenButton,
+    A,
+    B,
+    C,
+    D,
+    E,
+    F,
+    G,
+    H,
+    I
 }
