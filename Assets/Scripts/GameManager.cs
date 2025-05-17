@@ -12,6 +12,8 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
     [SerializeField] private ColorKeyBoard colorKeyBoard;
     [SerializeField] private Screen screen;
     [SerializeField] private DialogSystem dialogSystem;
+    [SerializeField] private HintSystem hintSystem;
+
     [SerializeField] private DialogueData dialogueDatabase;
     private bool isTaskActive = false;
 
@@ -60,7 +62,6 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
         colorKeyBoard.Initialize();
         keyboard.Initialize();
         screen.Initialize();
-        StartTask();
         canInput = true;
 
         colorKeyBoard.OnKeyPressed += TryCompleteSymbol;
@@ -82,6 +83,9 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
         CurrentSymbol = CurrentTaskSymbols[0];
         CurrentSymbolIndex = 0;
         OnTaskStarted?.Invoke();
+        var hints = dialogueDatabase.GetHints($"task_{CurrentTask}");
+        hintSystem.ShowHints(hints);
+
     }
 
     public void CompleteTask()
@@ -96,6 +100,7 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
             //Разблокировать огонь
         }
         isTaskActive = false;
+        hintSystem.HideHints();
     }
 
     public void NextDialogue()

@@ -34,6 +34,19 @@ namespace DefaultNamespace
             return new[] { "..." };
         }
 
+        public string[] GetHints(string id)
+        {
+            if (dialogueMap == null) Initialize();
+
+            foreach (var entry in entries)
+            {
+                if (entry.Id == id)
+                    return entry.Hints ?? Array.Empty<string>();
+            }
+
+            Debug.LogWarning($"Подсказки для диалога с ID '{id}' не найдены.");
+            return Array.Empty<string>();
+        }
     }
 
     [Serializable]
@@ -41,5 +54,6 @@ namespace DefaultNamespace
     {
         public string Id;
         public string[] Messages;
+        public string[] Hints; // <-- Новое поле
     }
 }
