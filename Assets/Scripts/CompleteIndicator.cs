@@ -15,19 +15,31 @@ public class CompleteIndicator : MonoBehaviour
     public void Initialize(SymbolSlot slot)
     {
         symbolSlot = slot;
-        UpdateState();
+        UpdateState(GameManager.Instance.CurrentSymbolIndex);
 
 
         symbolSlot.SymbolInSlot.OnCompletedChanged += UpdateCompletedState;
+        symbolSlot.SymbolInSlot.OnDenaidChanged += UpdateDeniedState;
+        GameManager.Instance.OnCurrentSymbolIndexChanged += UpdateState;
     }
 
-    public void UpdateState()
+    private void OnDestroy()
     {
-        if (symbolSlot.SlotIndex == GameManager.Instance.CurrentTaskSymbolIndex)
+        symbolSlot.SymbolInSlot.OnCompletedChanged -= UpdateCompletedState;
+        symbolSlot.SymbolInSlot.OnDenaidChanged -= UpdateDeniedState;
+        GameManager.Instance.OnCurrentSymbolIndexChanged -= UpdateState;
+    }
+
+    public void UpdateState(int index)
+    {
+        if (index <= GameManager.Instance.CurrentSymbolIndex && symbolSlot.SymbolInSlot.IsCompleted)
+        {
+        }
+        else if (index == GameManager.Instance.CurrentSymbolIndex)
         {
             image.sprite = waiting;
         }
-        else
+        else if (index > GameManager.Instance.CurrentSymbolIndex)
         {
             image.sprite = offed;
         }
@@ -39,7 +51,11 @@ public class CompleteIndicator : MonoBehaviour
         {
             image.sprite = complete;
         }
-        else
+    }
+    
+    private void UpdateDeniedState(bool isDenied)
+    {
+        if (isDenied)
         {
             image.sprite = denied;
         }

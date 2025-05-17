@@ -26,9 +26,4 @@ public class SymbolSlot: MonoBehaviour
             symbolImage.sprite = symbolConfig.GetSprite(SymbolInSlot.ThisSymbol);
         }
     }
-
-    public void UpdateIndicator()
-    {
-        completeIndicator.UpdateState();
-    }
 }

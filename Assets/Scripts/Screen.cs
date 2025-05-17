@@ -11,15 +11,16 @@ public class Screen : MonoBehaviour
 
     public void Initialize()
     {
-        StartTask(GameManager.Instance.CurrentTask);
-        GameManager.Instance.OnCurrentTaskChanged += StartTask;
-        GameManager.Instance.OnCompleted += UpdateSlotsState;
-        GameManager.Instance.OnDenied += UpdateSlotsState;
+        GameManager.Instance.OnTaskStarted += StartTask;
     }
     
-    private void StartTask(int taskID)
+    private void StartTask()
     {
         symbols.Clear();
+        foreach (var slot in symbolSlots)
+        {
+            Destroy(slot.gameObject);
+        }
         symbolSlots.Clear();
         
         symbols = GameManager.Instance.CurrentTaskSymbols;
@@ -29,16 +30,6 @@ public class Screen : MonoBehaviour
             var instance = Instantiate(symbolSlotPrefab, contentTransform);
             instance.Initialize(symbols[i], i);
             symbolSlots.Add(instance);
-        }
-    }
-
-    private void UpdateSlotsState(int index)
-    {
-        for (int i = 0; i < symbolSlots.Count; i++)
-        {
-            if (i == index) continue;
-            
-            symbolSlots[i].UpdateIndicator();
         }
     }
 }

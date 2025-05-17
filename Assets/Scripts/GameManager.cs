@@ -11,9 +11,21 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
     [SerializeField] private Screen screen;
 
     public List<Symbol> CurrentTaskSymbols { get; private set; } = new();
+    private bool canInput;
 
+    public event Action<int> OnCurrentSymbolIndexChanged; 
+    private int currentSymbolIndex;
+    public int CurrentSymbolIndex
+    { 
+        get => currentSymbolIndex;
+        private set
+        {
+            currentSymbolIndex = value;
+            OnCurrentSymbolIndexChanged?.Invoke(value);
+        }
+    }
+    
     public event Action<Symbol> OnCurrentSymbolChanged;
-    public int CurrentTaskSymbolIndex { get; private set; }
     private Symbol currentSymbol;
     public Symbol CurrentSymbol
     {
@@ -39,45 +51,52 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
 
     private void Start()
     {
-        StartTask();
         keyboard.Initialize();
         screen.Initialize();
+        StartTask();
+        canInput = true;
         
         keyboard.OnKeyPressed += TryCompleteSymbol;
     }
 
-    public void NextTask()
-    {
-        Instance.CurrentTask++;
-    }
-
     public Task GetTask()
     {
-        return tasks[Instance.CurrentTask];
+        return tasks[CurrentTask];
     }
 
+    public event Action OnTaskStarted; 
     public void StartTask()
     {
+        CurrentTaskSymbols.Clear();
         CurrentTaskSymbols = tasks[CurrentTask].Symbols.ToList();
         CurrentSymbol = CurrentTaskSymbols[0];
-        CurrentTaskSymbolIndex = 0;
+        CurrentSymbolIndex = 0;
+        OnTaskStarted?.Invoke();
     }
 
     public void CompleteTask()
     {
-        
+        CurrentTask++;
+        if (tasks.ContainsKey(CurrentTask))
+        {
+            StartTask();
+        }
+        else
+        {
+            //Разблокировать огонь
+        }
     }
 
     private void NextSymbol()
     {
-        CurrentTaskSymbolIndex++;
-        if (CurrentTaskSymbolIndex >= CurrentTaskSymbols.Count)
+        CurrentSymbolIndex++;
+        if (CurrentSymbolIndex >= CurrentTaskSymbols.Count)
         {
             CompleteTask();
         }
         else
         {
-            CurrentSymbol = CurrentTaskSymbols[CurrentTaskSymbolIndex];
+            CurrentSymbol = CurrentTaskSymbols[CurrentSymbolIndex];
         }
     }
     
@@ -85,15 +104,19 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
     public event Action<int> OnDenied;
     private void TryCompleteSymbol(Symbols symbol)
     {
+        if (!canInput) return;
+        
         if (CurrentSymbol.ThisSymbol == symbol)
         {
-            NextSymbol();
-            OnCompleted?.Invoke(CurrentTaskSymbolIndex);
             CurrentSymbol.Complete();
+            OnCompleted?.Invoke(CurrentSymbolIndex);
+            NextSymbol();
         }
         else
         {
-            OnDenied?.Invoke(CurrentTaskSymbolIndex);
+            CurrentSymbol.Deny();
+            OnDenied?.Invoke(CurrentSymbolIndex);
+            canInput = false;
         }
     }
 }

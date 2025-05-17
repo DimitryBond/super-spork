@@ -1059,6 +1059,21 @@ MonoBehaviour:
         - symbol: 0
           isHideSymbol: 0
         TaskDescription: 
+    - Key: 1
+      Value:
+        TaskId: 1
+        Symbols:
+        - symbol: 0
+          isHideSymbol: 0
+        - symbol: 0
+          isHideSymbol: 0
+        - symbol: 0
+          isHideSymbol: 0
+        - symbol: 0
+          isHideSymbol: 0
+        - symbol: 0
+          isHideSymbol: 1
+        TaskDescription: 
   keyboard: {fileID: 793830532}
   screen: {fileID: 1666898795}
 --- !u!4 &1823158124
