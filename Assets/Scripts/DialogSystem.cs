@@ -44,12 +44,22 @@ namespace DefaultNamespace
             currentMessages = messages;
             currentMessageIndex = 0;
             isShowingMessages = true;
-            
-            StartCoroutine(FadeCanvas(0f, 1f, fadeDuration, () => {
-                ShowMessage(currentMessages[currentMessageIndex]);
-            }));
+
+            GameManager.Instance.IsTaskActive = false;
+
             audioSource.Stop();
+
+            StartCoroutine(ShowDialogueSequence()); 
         }
+
+        private IEnumerator ShowDialogueSequence()
+        {
+            yield return StartCoroutine(FadeCanvas(0f, 1f, fadeDuration, null)); 
+
+            ShowMessage(currentMessages[currentMessageIndex]); 
+        }
+
+
 
         private void ShowMessage(string message)
         {

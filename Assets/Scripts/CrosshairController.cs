@@ -17,7 +17,7 @@ public class CrosshairController : MonoBehaviour
         GameManager.Instance.OnTaskStarted += LockedControl;
     }
 
-    private void LockedControl()
+    public void LockedControl()
     {
         canControl = false;
         foreach (var button in buttons)
@@ -59,7 +59,8 @@ public class CrosshairController : MonoBehaviour
         crosshair.MoveRight();
     }
     
-    public event Action OnTruePlanetDestroy;
+    public event Action<PlanetInfo> OnTruePlanetDestroy;
+
     public void Fire()
     {
         if (!canControl) return;
@@ -74,8 +75,9 @@ public class CrosshairController : MonoBehaviour
             if (planetInfo != null)
             {
                 Debug.Log("Выбранная планета: " + planetInfo.GetPlanetName());
-                OnTruePlanetDestroy?.Invoke();
+                OnTruePlanetDestroy?.Invoke(planetInfo); 
             }
+
             else
             {
                 Debug.Log("Инфон планеты отсутствует");

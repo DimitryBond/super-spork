@@ -6,7 +6,7 @@ public class PlanetInfo : MonoBehaviour
 {
     public string planetName; // Имя планеты
 
-    // Метод для получения имени планеты
+    public bool IsTarget { get; set; }
     public string GetPlanetName()
     {
         return planetName;
