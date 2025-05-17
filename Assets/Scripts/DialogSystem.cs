@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -16,6 +17,8 @@ namespace DefaultNamespace
 
         [SerializeField] private float typingSpeed = 0.05f;      // Скорость печати текста (сек на символ)
         [SerializeField] private float fadeDuration = 0.5f;      // Время плавного появления/исчезновения
+        
+        [SerializeField] private AudioSource audioSource;
 
         private void Update()
         {
@@ -45,10 +48,12 @@ namespace DefaultNamespace
             StartCoroutine(FadeCanvas(0f, 1f, fadeDuration, () => {
                 ShowMessage(currentMessages[currentMessageIndex]);
             }));
+            audioSource.Stop();
         }
 
         private void ShowMessage(string message)
         {
+            audioSource.Play();
             if (typingCoroutine != null)
                 StopCoroutine(typingCoroutine);
 

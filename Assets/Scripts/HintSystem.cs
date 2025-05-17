@@ -10,6 +10,7 @@ namespace DefaultNamespace
         [SerializeField] private TextMeshProUGUI hintText;
         [SerializeField] private float fadeDuration = 0.5f;
         [SerializeField] private float typingSpeed = 0.05f;
+        [SerializeField] private AudioSource audioSource;
 
         private string[] currentHints;
         private int currentHintIndex;
