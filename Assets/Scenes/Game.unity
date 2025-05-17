@@ -188,6 +188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 69919256}
   introText: {fileID: 919174388}
+  customFont: {fileID: 0}
 --- !u!224 &73070299 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6916457907318458080, guid: dd8742d2999082e4790770e77d032191, type: 3}
