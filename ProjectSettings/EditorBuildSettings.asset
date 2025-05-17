@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 940b5f6a74355bd4094ca995024fb629
+  - enabled: 1
+    path: Assets/Scenes/Game Dima2.unity
+    guid: de442f8e4c8d4414aae1dc0180412a61
   m_configObjects: {}

@@ -43,6 +43,6 @@ public class Crosshair : MonoBehaviour
     {
         // Ограничение по оси X и Y (установите свои значения)
         targetPosition.x = Mathf.Clamp(targetPosition.x, -8f, 8f); // Границы по X
-        targetPosition.y = Mathf.Clamp(targetPosition.y, -4.5f, 4.5f); // Границы по Y
+        targetPosition.y = Mathf.Clamp(targetPosition.y, 0.25f, 4.5f); // Границы по Y
     }
 }

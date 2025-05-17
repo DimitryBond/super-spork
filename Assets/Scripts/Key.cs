@@ -66,16 +66,4 @@ public class Key : MonoBehaviour
             button.spriteState = tempSpriteState;
         }
     }
-
-    public void StartGame()
-    {
-        button.interactable = false;
-        SceneManager.LoadScene("Game");
-    }
-    
-    public void ExitGame()
-    {
-        button.interactable = false;
-        //Application.Quit();
-    }
 }
