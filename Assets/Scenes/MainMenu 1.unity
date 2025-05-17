@@ -1202,7 +1202,7 @@ MonoBehaviour:
   secondPressedButtonSprite: {fileID: 21300000, guid: 74180a6763319884e96436292e4c881f, type: 3}
   keyImage: {fileID: 496700743}
   button: {fileID: 496700742}
---- !u!1 &781173820
+--- !u!1 &763694781
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1210,29 +1210,29 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 781173822}
-  - component: {fileID: 781173821}
+  - component: {fileID: 763694783}
+  - component: {fileID: 763694782}
   m_Layer: 0
   m_Name: BackgroundMusic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &781173821
+  m_IsActive: 0
+--- !u!82 &763694782
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 781173820}
+  m_GameObject: {fileID: 763694781}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2725883074134991648, guid: 5473c3bfaf970854f9e09ef0a6005e50, type: 2}
   m_audioClip: {fileID: 8300000, guid: 2ccb0ad8dac4bea49bce401ac90b1a3e, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 0.7
+  m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -1315,13 +1315,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!4 &781173822
+--- !u!4 &763694783
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 781173820}
+  m_GameObject: {fileID: 763694781}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -2373,4 +2373,4 @@ SceneRoots:
   - {fileID: 849020455}
   - {fileID: 136914356}
   - {fileID: 1351950660}
-  - {fileID: 781173822}
+  - {fileID: 763694783}

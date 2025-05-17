@@ -70,7 +70,7 @@ public class Key : MonoBehaviour
     public void StartGame()
     {
         button.interactable = false;
-        //SceneManager.LoadScene("Game 1");
+        SceneManager.LoadScene("Game");
     }
     
     public void ExitGame()
