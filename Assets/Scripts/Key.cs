@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Key : MonoBehaviour
@@ -64,5 +65,17 @@ public class Key : MonoBehaviour
             tempSpriteState.pressedSprite = secondPressedButtonSprite;
             button.spriteState = tempSpriteState;
         }
+    }
+
+    public void StartGame()
+    {
+        button.interactable = false;
+        //SceneManager.LoadScene("Game 1");
+    }
+    
+    public void ExitGame()
+    {
+        button.interactable = false;
+        //Application.Quit();
     }
 }
