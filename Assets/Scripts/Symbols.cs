@@ -9,7 +9,8 @@ public enum Symbols
     Seven,
     Eight,
     Nine,
-    PressButton,
-    SwitchDown,
-    SwitchUp,
+    RedButton,
+    BlueButton,
+    YellowButton,
+    GreenButton
 }

@@ -8,6 +8,7 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
 {
     [SerializeField] private SerializedDictionary<int, Task> tasks = new();
     [SerializeField] private KeyBoard keyboard;
+    [SerializeField] private ColorKeyBoard colorKeyBoard;
     [SerializeField] private Screen screen;
 
     public List<Symbol> CurrentTaskSymbols { get; private set; } = new();
@@ -51,11 +52,13 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
 
     private void Start()
     {
+        colorKeyBoard.Initialize();
         keyboard.Initialize();
         screen.Initialize();
         StartTask();
         canInput = true;
-        
+
+        colorKeyBoard.OnKeyPressed += TryCompleteSymbol;
         keyboard.OnKeyPressed += TryCompleteSymbol;
     }
 
