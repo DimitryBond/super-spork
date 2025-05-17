@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AYellowpaper.SerializedCollections;
+using DefaultNamespace;
 using UnityEngine;
 
 public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
@@ -9,6 +10,10 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
     [SerializeField] private SerializedDictionary<int, Task> tasks = new();
     [SerializeField] private KeyBoard keyboard;
     [SerializeField] private Screen screen;
+    [SerializeField] private DialogSystem dialogSystem;
+    [SerializeField] private DialogueData dialogueDatabase;
+    private bool isTaskActive = false;
+
 
     public List<Symbol> CurrentTaskSymbols { get; private set; } = new();
     private bool canInput;
@@ -27,6 +32,7 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
     
     public event Action<Symbol> OnCurrentSymbolChanged;
     private Symbol currentSymbol;
+
     public Symbol CurrentSymbol
     {
         get => currentSymbol;
@@ -36,7 +42,6 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
             OnCurrentSymbolChanged?.Invoke(value);
         }
     }
-    
     public event Action<int> OnCurrentTaskChanged;
     private int currentTask;
     public int CurrentTask
@@ -57,6 +62,8 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
         canInput = true;
         
         keyboard.OnKeyPressed += TryCompleteSymbol;
+        dialogSystem.ShowDialogue(dialogueDatabase.GetDialogue("task_0"));
+        isTaskActive = true;
     }
 
     public Task GetTask()
@@ -85,7 +92,26 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
         {
             //Разблокировать огонь
         }
+        isTaskActive = false;
     }
+
+    public void NextDialogue()
+    {
+        if (isTaskActive) return;
+
+        string id = $"task_{CurrentTask}";
+        var dialogue = dialogueDatabase.GetDialogue(id);
+        dialogSystem.ShowDialogue(dialogue);
+    }
+    
+    public void TriggerEndingDialogue(string endingId)
+    {
+        if (dialogueDatabase == null) return;
+
+        var dialogue = dialogueDatabase.GetDialogue(endingId);
+        dialogSystem.ShowDialogue(dialogue);
+    }
+
 
     private void NextSymbol()
     {
@@ -99,7 +125,6 @@ public class GameManager: DontDestroyOnLoadMonoSingleton<GameManager>
             CurrentSymbol = CurrentTaskSymbols[CurrentSymbolIndex];
         }
     }
-    
     public event Action<int> OnCompleted;
     public event Action<int> OnDenied;
     private void TryCompleteSymbol(Symbols symbol)
