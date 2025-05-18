@@ -15,7 +15,6 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
     [SerializeField] private Screen screen;
     [SerializeField] private DialogSystem dialogSystem;
     [SerializeField] private HintSystem hintSystem;
-    [SerializeField] private TargetPlanetData targetPlanetData;
     [SerializeField] private DialogueData dialogueDatabase;
     
     private int currentRound = 0;
