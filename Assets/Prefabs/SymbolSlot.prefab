@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 5183596229789620509}
-  complete: {r: 0.5235849, g: 1, b: 0.533889, a: 1}
+  complete: {r: 0.067964464, g: 0.8962264, b: 0, a: 1}
   waiting: {r: 1, g: 0.97980195, b: 0.4764151, a: 1}
   denied: {r: 1, g: 0.3160377, b: 0.3160377, a: 0}
   offed: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
