@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -6,19 +7,21 @@ public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] private Button button;
 
+    private void Start()
+    {
+        var a = FindObjectOfType<GameManager>();
+        Destroy(a.gameObject);
+    }
+
     public void StartGame()
     {
         button.interactable = false;
         MusicManager.Instance.SetFadeOutMusic(true);
         MusicManager.Instance.StopMusic();
-        Invoke("LoadScene", 2f);
-    }
-
-    private void LoadScene()
-    {
         SceneManager.LoadScene("Game Dima2");
         MusicManager.Instance.SetFadeOutMusic(true);
     }
+
     
     public void ExitGame()
     {

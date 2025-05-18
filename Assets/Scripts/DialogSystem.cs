@@ -72,7 +72,7 @@ namespace DefaultNamespace
         {
             var randomIndex = UnityEngine.Random.Range(0, randomSounds.Length);
             audioSource.clip = randomSounds[randomIndex];
-            audioSource.Play();
+            //audioSource.Play();
 
             animator.SetBool("Talk", true);
             if (typingCoroutine != null)
@@ -86,6 +86,7 @@ namespace DefaultNamespace
 
         private IEnumerator TypeText(string message)
         {
+            audioSource.Play();
             introText.text = "";
             foreach (char c in message)
             {
@@ -125,6 +126,9 @@ namespace DefaultNamespace
             canvasGroup.blocksRaycasts = visible;
             canvasGroup.interactable = visible;
 
+            audioSource.Stop();
+            animator.SetBool("Talk", false);
+            
             onComplete?.Invoke();
         }
 

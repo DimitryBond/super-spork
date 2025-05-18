@@ -4,6 +4,7 @@ using System.Linq;
 using AYellowpaper.SerializedCollections;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
@@ -139,16 +140,22 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
     {
         if (AllTasksCompleted)
         {
+            MusicManager.Instance.StopMusic();
+            SceneManager.LoadScene("Titri");
             Debug.Log("КОНЦОВКА - ВСЕ ЗАДАНИЯ ВЫПОЛНЕНЫ");
             return;
         }
         else if (PlayerWasDestroy)
         {
+            MusicManager.Instance.StopMusic();
+            SceneManager.LoadScene("Titri");
             Debug.Log("КОНЦОВКА - ИГРОК БЫЛ УНИЧТОЖЕН");
             return;
         }
         else if (PlayerDestroyCommander)
         {
+            MusicManager.Instance.StopMusic();
+            SceneManager.LoadScene("Titri");
             Debug.Log("КОНЦОВКА - ИГРОК УНИЧТОЖИЛ СВОЕ КОМАНДОВАНИЕ");
             return;
         }
