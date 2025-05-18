@@ -648,14 +648,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6886792, g: 0.34109113, b: 0.44839242, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1819366854, guid: fc1d9b36a058dbd4d9541feba0647d88, type: 3}
+  m_Sprite: {fileID: 21300000, guid: abe4809d7ad3dc14b836afdde4d0d621, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -946,14 +946,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6901961, g: 0.34117648, b: 0.44705883, a: 0.64705884}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1819366854, guid: fc1d9b36a058dbd4d9541feba0647d88, type: 3}
+  m_Sprite: {fileID: 21300000, guid: abe4809d7ad3dc14b836afdde4d0d621, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1015,8 +1015,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00001967, y: -19.6}
-  m_SizeDelta: {x: 413.95, y: 27.45}
+  m_AnchoredPosition: {x: 1.26, y: -16.662}
+  m_SizeDelta: {x: 320.81, y: 33.325}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &507624454
 MonoBehaviour:
@@ -1155,8 +1155,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d7cc59cab4673648922d87bfe751108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volumeSlider: {fileID: 507624457}
   audioMixer: {fileID: 24100000, guid: 5473c3bfaf970854f9e09ef0a6005e50, type: 2}
-  masterVolumeSlider: {fileID: 507624457}
+  mixerParameter: Master
+  minimumVolume: -60
 --- !u!114 &507624457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1201,17 +1203,17 @@ MonoBehaviour:
   m_FillRect: {fileID: 2073700860}
   m_HandleRect: {fileID: 1239210277}
   m_Direction: 0
-  m_MinValue: -80
-  m_MaxValue: 20
+  m_MinValue: 0
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: -37.5
+  m_Value: 0.663
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 507624456}
         m_TargetAssemblyTypeName: VolumeSettings, Assembly-CSharp
-        m_MethodName: AudioVolume
-        m_Mode: 1
+        m_MethodName: UpdateMixerVolume
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1319,7 +1321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6226415, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1354,6 +1356,7 @@ GameObject:
   m_Component:
   - component: {fileID: 763694783}
   - component: {fileID: 763694782}
+  - component: {fileID: 763694784}
   m_Layer: 0
   m_Name: BackgroundMusic
   m_TagString: Untagged
@@ -1375,7 +1378,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1472,6 +1475,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &763694784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763694781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24f1ad38372d3cd449d7cbdeb457e38a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  introMusic: {fileID: 0}
+  mainMenuMusic: []
+  gameMusic: []
 --- !u!1 &849020451
 GameObject:
   m_ObjectHideFlags: 0
@@ -1638,8 +1656,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 499364214}
-  - {fileID: 496700739}
   - {fileID: 1081426604}
+  - {fileID: 496700739}
   m_Father: {fileID: 136914356}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1774,14 +1792,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6901961, g: 0.34117648, b: 0.44705883, a: 0.39607844}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1194415339, guid: fc1d9b36a058dbd4d9541feba0647d88, type: 3}
+  m_Sprite: {fileID: 21300000, guid: abe4809d7ad3dc14b836afdde4d0d621, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1856,7 +1874,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: spork
+  m_text: S.P.O.R.K.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 913f922ea2783ae44ab7e3ccd2cd5253, type: 2}
   m_sharedMaterial: {fileID: -5988909761470380640, guid: 913f922ea2783ae44ab7e3ccd2cd5253, type: 2}
@@ -1883,7 +1901,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 200.4
+  m_fontSize: 129.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2019,7 +2037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.735849, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2146,7 +2164,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.84, y: 34}
+  m_AnchoredPosition: {x: 85, y: 25}
   m_SizeDelta: {x: 419.68, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1457800105
@@ -2430,7 +2448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8207547, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

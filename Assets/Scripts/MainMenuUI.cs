@@ -9,9 +9,17 @@ public class MainMenuUI : MonoBehaviour
     public void StartGame()
     {
         button.interactable = false;
-        SceneManager.LoadScene("Game Dima2");
+        MusicManager.Instance.SetFadeOutMusic(true);
+        MusicManager.Instance.StopMusic();
+        Invoke("LoadScene", 2f);
     }
 
+    private void LoadScene()
+    {
+        SceneManager.LoadScene("Game Dima2");
+        MusicManager.Instance.SetFadeOutMusic(true);
+    }
+    
     public void ExitGame()
     {
         button.interactable = false;

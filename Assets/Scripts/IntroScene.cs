@@ -22,9 +22,12 @@ public class IntroScene : MonoBehaviour
 
     private IEnumerator IntroSeq()
     {
+        //MusicManager.Instance.SetVolume(0f);
+        MusicManager.Instance.PlayIntroMusic();
         yield return new WaitForSeconds(delay1);
         text1.gameObject.SetActive(true);
-        DontDestroyOnLoad(clip.gameObject);
+        //MusicManager.Instance.SetVolume(1f);
+        
 
         yield return new WaitForSeconds(delay2);
         text1.gameObject.SetActive(false);
