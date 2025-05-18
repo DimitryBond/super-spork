@@ -50,11 +50,13 @@ MonoBehaviour:
       Value:
         TaskId: 0
         Symbols:
-        - symbol: 0
+        - symbol: 2
           isHideSymbol: 0
-        - symbol: 0
+        - symbol: 8
           isHideSymbol: 0
-        - symbol: 0
+        - symbol: 1
+          isHideSymbol: 0
+        - symbol: 3
           isHideSymbol: 0
         TaskDescription: 
     - Key: 1
@@ -63,21 +65,67 @@ MonoBehaviour:
         Symbols:
         - symbol: 0
           isHideSymbol: 0
-        - symbol: 1
+        - symbol: 5
           isHideSymbol: 0
-        - symbol: 0
+        - symbol: 15
+          isHideSymbol: 0
+        - symbol: 21
+          isHideSymbol: 0
+        - symbol: 6
+          isHideSymbol: 0
+        - symbol: 13
           isHideSymbol: 0
         TaskDescription: 
     - Key: 2
       Value:
         TaskId: 2
         Symbols:
-        - symbol: 0
+        - symbol: 13
           isHideSymbol: 0
-        - symbol: 0
+        - symbol: 10
           isHideSymbol: 0
-        - symbol: 0
+        - symbol: 15
           isHideSymbol: 0
+        - symbol: 3
+          isHideSymbol: 1
+        - symbol: 9
+          isHideSymbol: 0
+        - symbol: 5
+          isHideSymbol: 0
+        TaskDescription: 
+    - Key: 3
+      Value:
+        TaskId: 3
+        Symbols:
+        - symbol: 4
+          isHideSymbol: 1
+        - symbol: 12
+          isHideSymbol: 0
+        - symbol: 10
+          isHideSymbol: 1
+        - symbol: 18
+          isHideSymbol: 0
+        - symbol: 20
+          isHideSymbol: 0
+        - symbol: 1
+          isHideSymbol: 0
+        TaskDescription: 
+    - Key: 4
+      Value:
+        TaskId: 4
+        Symbols:
+        - symbol: 9
+          isHideSymbol: 0
+        - symbol: 5
+          isHideSymbol: 0
+        - symbol: 2
+          isHideSymbol: 1
+        - symbol: 11
+          isHideSymbol: 1
+        - symbol: 15
+          isHideSymbol: 0
+        - symbol: 8
+          isHideSymbol: 1
         TaskDescription: 
   crosshairController: {fileID: 0}
   keyboard: {fileID: 0}
@@ -86,3 +134,4 @@ MonoBehaviour:
   dialogSystem: {fileID: 0}
   hintSystem: {fileID: 0}
   dialogueDatabase: {fileID: 11400000, guid: 93ecf3b857f6efb438060640915cfff9, type: 2}
+  enemyShip: {fileID: 0}

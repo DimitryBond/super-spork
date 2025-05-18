@@ -16,7 +16,11 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
     [SerializeField] private DialogSystem dialogSystem;
     [SerializeField] private HintSystem hintSystem;
     [SerializeField] private DialogueData dialogueDatabase;
-    [SerializeField] private GameObject EnemyShip;
+    [SerializeField] private PlanetInfo enemyShip;
+
+    private bool allTasksCompleted;
+    private bool playerWasDestroy;
+    public bool PlayerDestroyCommander { get; set; }
     
     private int currentRound = 0;
     private PlanetInfo currentTargetPlanet;
@@ -32,6 +36,19 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
         {
             health = value;
             OnHealthChanged?.Invoke(value);
+            CheckHealth();
+        }
+    }
+
+    private void CheckHealth()
+    {
+        if (Health == 1)
+        {
+            enemyShip.gameObject.SetActive(true);
+        }
+        if (Health == 0)
+        {
+            playerWasDestroy = true;
         }
     }
     
@@ -120,6 +137,22 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
     public event Action OnTaskStarted;
     public void StartTask()
     {
+        if (allTasksCompleted)
+        {
+            Debug.Log("КОНЦОВКА - ВСЕ ЗАДАНИЯ ВЫПОЛНЕНЫ");
+            return;
+        }
+        else if (playerWasDestroy)
+        {
+            Debug.Log("КОНЦОВКА - ИГРОК БЫЛ УНИЧТОЖЕН");
+            return;
+        }
+        else if (PlayerDestroyCommander)
+        {
+            Debug.Log("КОНЦОВКА - ИГРОК УНИЧТОЖИЛ СВОЕ КОМАНДОВАНИЕ");
+            return;
+        }
+        
         SetupTargetPlanet();
         CurrentTaskSymbols.Clear();
         CurrentTaskSymbols = tasks[CurrentTask].Symbols.ToList();
@@ -139,15 +172,20 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
         {
             var dialog = dialogueDatabase.GetDialogue($"{currentTargetPlanet.PlanetName}_Destroy");
             dialogSystem.ShowDialogue(dialog);
-            
-            if (CurrentTask == 1)
+
+            if (CurrentTask == 0)
             {
                 var messages = dialog.Concat(dialogueDatabase.GetDialogue("TaskWithShift").Concat(dialogueDatabase.GetDialogue("Task"))).ToArray();
                 dialogSystem.ShowDialogue(messages);
             }
-            else if (CurrentTask == 2)
+            else if (CurrentTask == 1)
             {
                 var messages = dialog.Concat(dialogueDatabase.GetDialogue("TaskWithColor").Concat(dialogueDatabase.GetDialogue("TaskWithHints")).Concat(dialogueDatabase.GetDialogue("Task"))) .ToArray();
+                dialogSystem.ShowDialogue(messages);
+            }
+            else if (CurrentTask == 2)
+            {
+                var messages = dialog.Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
                 dialogSystem.ShowDialogue(messages);
             }
             else if (CurrentTask == 3)
@@ -157,9 +195,9 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
             }
             else if (CurrentTask == 4)
             {
-                var messages = dialog.Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                allTasksCompleted = true;
+                var messages = dialog.Concat(dialogueDatabase.GetDialogue("GoodFinal")).ToArray();
                 dialogSystem.ShowDialogue(messages);
-                EnemyShip.SetActive(true);
             }
             //конец игры
             else if (CurrentTask == 5)
@@ -168,39 +206,51 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
         }
         else
         {
-            var id = $"Health={health}";
-            var dialog = dialogueDatabase.GetDialogue(id);
+            var dialog = dialogueDatabase.GetDialogue($"Health={health}");
             dialogSystem.ShowDialogue(dialog);
             
-            if (CurrentTask == 1)
+            if (health == 0)
             {
-                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                TaskFinish();
+                return;
+            }
+            else if (CurrentTask == 0)
+            {
+                var messages = dialog.Concat(dialogueDatabase.GetDialogue("TaskWithShift").Concat(dialogueDatabase.GetDialogue("Task"))).ToArray();
+                dialogSystem.ShowDialogue(messages);
+            }
+            else if (CurrentTask == 1)
+            {
+                var messages = dialog.Concat(dialogueDatabase.GetDialogue("TaskWithColor").Concat(dialogueDatabase.GetDialogue("TaskWithHints")).Concat(dialogueDatabase.GetDialogue("Task"))) .ToArray();
                 dialogSystem.ShowDialogue(messages);
             }
             else if (CurrentTask == 2)
             {
-                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                var messages = dialog.Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
                 dialogSystem.ShowDialogue(messages);
             }
             else if (CurrentTask == 3)
             {
-                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                var messages = dialog.Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
                 dialogSystem.ShowDialogue(messages);
             }
             else if (CurrentTask == 4)
             {
-                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                allTasksCompleted = true;
+                var messages = dialog.Concat(dialogueDatabase.GetDialogue("GoodFinal")).ToArray();
                 dialogSystem.ShowDialogue(messages);
             }
             //конец игры
             else if (CurrentTask == 5)
             {
-                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
-                EnemyShip.SetActive(true);
-                dialogSystem.ShowDialogue(messages);
             }
         }
         
+        TaskFinish();
+    }
+
+    private void TaskFinish()
+    {
         CurrentTask++;
         hintSystem.HideHints();
         IsTaskActive = false;
@@ -250,7 +300,8 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
     private void SetupTargetPlanet()
     {
         allPlanets = new List<PlanetInfo>(FindObjectsOfType<PlanetInfo>());
-
+        allPlanets.Remove(allPlanets.Find(x => x.PlanetName == "Корабль"));
+        
         foreach (var planet in allPlanets)
         {
             planet.IsTarget = false;
@@ -268,6 +319,15 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
         {
             Health--;
             CompleteTask(false);
+            return;
+        }
+
+        if (hitPlanet.PlanetName == "Корабль")
+        {
+            var messages = dialogueDatabase.GetDialogue("CommandDestroyFinal");
+            dialogSystem.ShowDialogue(messages);
+            PlayerDestroyCommander = true;
+            StartTask();
             return;
         }
 

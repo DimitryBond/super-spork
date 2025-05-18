@@ -470,6 +470,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &934565374 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3103136932710026550, guid: 105c3fed42aad8448bc28da1813e95a5, type: 3}
+  m_PrefabInstance: {fileID: 1279205145}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 784de5f431228ec41be474f731e755c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &940160309
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,10 +577,6 @@ PrefabInstance:
     - target: {fileID: 24415193131664429, guid: 7fe5e2e52f745864d808a71bf63963ff, type: 3}
       propertyPath: m_Name
       value: DialogSystem
-      objectReference: {fileID: 0}
-    - target: {fileID: 2101218572456680736, guid: 7fe5e2e52f745864d808a71bf63963ff, type: 3}
-      propertyPath: m_Alpha
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6509686793165029573, guid: 7fe5e2e52f745864d808a71bf63963ff, type: 3}
       propertyPath: m_Pivot.x
@@ -763,18 +770,6 @@ PrefabInstance:
     - target: {fileID: 2727723610389062940, guid: 7d43d545a80a71949a743021ef62b73d, type: 3}
       propertyPath: m_Name
       value: Screen
-      objectReference: {fileID: 0}
-    - target: {fileID: 2894113827811395036, guid: 7d43d545a80a71949a743021ef62b73d, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 913f922ea2783ae44ab7e3ccd2cd5253, type: 2}
-    - target: {fileID: 2894113827811395036, guid: 7d43d545a80a71949a743021ef62b73d, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -5988909761470380640, guid: 913f922ea2783ae44ab7e3ccd2cd5253, type: 2}
-    - target: {fileID: 2894113827811395036, guid: 7d43d545a80a71949a743021ef62b73d, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1569,6 +1564,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 793830532}
     - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
+      propertyPath: enemyShip
+      value: 
+      objectReference: {fileID: 934565374}
+    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
       propertyPath: hintSystem
       value: 
       objectReference: {fileID: 1331756148}
@@ -1584,182 +1583,6 @@ PrefabInstance:
       propertyPath: crosshairController
       value: 
       objectReference: {fileID: 1386776309}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[3].Key
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[4].Key
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[3].Value.TaskId
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[4].Value.TaskId
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[0].Value.Symbols.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[1].Value.Symbols.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[2].Value.Symbols.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[3].Value.Symbols.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[4].Value.Symbols.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[0].Value.Symbols.Array.data[0].symbol
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[0].Value.Symbols.Array.data[1].symbol
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[0].Value.Symbols.Array.data[2].symbol
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[0].Value.Symbols.Array.data[3].symbol
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[1].Value.Symbols.Array.data[1].symbol
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[1].Value.Symbols.Array.data[2].symbol
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[1].Value.Symbols.Array.data[3].symbol
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[1].Value.Symbols.Array.data[4].symbol
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[1].Value.Symbols.Array.data[5].symbol
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[1].Value.Symbols.Array.data[6].symbol
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[2].Value.Symbols.Array.data[0].symbol
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[2].Value.Symbols.Array.data[1].symbol
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[2].Value.Symbols.Array.data[2].symbol
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[2].Value.Symbols.Array.data[3].symbol
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[2].Value.Symbols.Array.data[4].symbol
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[2].Value.Symbols.Array.data[5].symbol
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[3].Value.Symbols.Array.data[0].symbol
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[3].Value.Symbols.Array.data[1].symbol
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[3].Value.Symbols.Array.data[2].symbol
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[3].Value.Symbols.Array.data[3].symbol
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[3].Value.Symbols.Array.data[4].symbol
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[3].Value.Symbols.Array.data[5].symbol
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[4].Value.Symbols.Array.data[0].symbol
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[4].Value.Symbols.Array.data[1].symbol
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[4].Value.Symbols.Array.data[2].symbol
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[4].Value.Symbols.Array.data[3].symbol
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[4].Value.Symbols.Array.data[4].symbol
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[4].Value.Symbols.Array.data[5].symbol
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[2].Value.Symbols.Array.data[3].isHideSymbol
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[3].Value.Symbols.Array.data[0].isHideSymbol
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[3].Value.Symbols.Array.data[2].isHideSymbol
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[4].Value.Symbols.Array.data[2].isHideSymbol
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[4].Value.Symbols.Array.data[3].isHideSymbol
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
-      propertyPath: tasks._serializedList.Array.data[4].Value.Symbols.Array.data[5].isHideSymbol
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4775378628648366537, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
       propertyPath: m_Name
       value: GameManager
