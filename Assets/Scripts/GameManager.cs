@@ -16,6 +16,7 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
     [SerializeField] private DialogSystem dialogSystem;
     [SerializeField] private HintSystem hintSystem;
     [SerializeField] private DialogueData dialogueDatabase;
+    [SerializeField] private GameObject EnemyShip;
     
     private int currentRound = 0;
     private PlanetInfo currentTargetPlanet;
@@ -158,6 +159,7 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
             {
                 var messages = dialog.Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
                 dialogSystem.ShowDialogue(messages);
+                EnemyShip.SetActive(true);
             }
             //конец игры
             else if (CurrentTask == 5)
@@ -194,6 +196,7 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
             else if (CurrentTask == 5)
             {
                 var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                EnemyShip.SetActive(true);
                 dialogSystem.ShowDialogue(messages);
             }
         }
