@@ -9,6 +9,9 @@ public class EndingText : MonoBehaviour
 
     private void Start()
     {
+        MusicManager.Instance.canSwitch = false;
+        MusicManager.Instance.StopMusic();
+        
         if (GameManager.Instance.AllTasksCompleted)
         {
             text1.text = "Концовка 1 из 3";

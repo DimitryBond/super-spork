@@ -45,6 +45,7 @@ public class Titri : MonoBehaviour
 
     private void ReturnToMenu()
     {
+        MusicManager.Instance.canSwitch = true;
         StartCoroutine(ReturnToMenuWithDelay(4f)); // Задержка 2 секунды
     }
 }

@@ -19,6 +19,7 @@ public class MusicManager : MonoBehaviour
 
     private bool isPlayingIntro = true;
     private bool isPlayingMainMenu = false;
+    public bool canSwitch = true;
     
     private AudioSource audioSource;
     private bool isFadingOut = false;
@@ -56,8 +57,12 @@ public class MusicManager : MonoBehaviour
             }
             else
             {
-                // Воспроизводим следующий трек из текущего списка
-                PlayNextTrack();
+                if (canSwitch)
+                {
+                    // Воспроизводим следующий трек из текущего списка
+                    PlayNextTrack();
+                }
+                
             }
         }
         
@@ -135,6 +140,11 @@ public class MusicManager : MonoBehaviour
     public void StopMusic()
     {
         audioSource.Stop();
+    }
+
+    public void ClipNull()
+    {
+        audioSource.clip = null;
     }
     
     // Метод для запуска плавного затухания
