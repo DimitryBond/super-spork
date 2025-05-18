@@ -13,7 +13,7 @@ public class CrosshairController : MonoBehaviour
     public void Initialize()
     {
         LockedControl();
-        GameManager.Instance.OnTaskFinished += UnlockedControl;
+        GameManager.Instance.OnStringTaskFinished += UnlockedControl;
         GameManager.Instance.OnTaskStarted += LockedControl;
     }
 
@@ -59,8 +59,7 @@ public class CrosshairController : MonoBehaviour
         crosshair.MoveRight();
     }
     
-    public event Action<PlanetInfo> OnTruePlanetDestroy;
-
+    public event Action<PlanetInfo> OnPlanetSelected;
     public void Fire()
     {
         if (!canControl) return;
@@ -70,22 +69,22 @@ public class CrosshairController : MonoBehaviour
 
         if (hit.collider != null)
         {
-            // Проверяем, попал ли луч в объект с компонентом PlanetInfo
             var planetInfo = hit.collider.GetComponent<PlanetInfo>();
             if (planetInfo != null)
             {
-                Debug.Log("Выбранная планета: " + planetInfo.GetPlanetName());
-                OnTruePlanetDestroy?.Invoke(planetInfo); 
+                OnPlanetSelected?.Invoke(planetInfo); 
+                
             }
-
             else
             {
-                Debug.Log("Инфон планеты отсутствует");
+                OnPlanetSelected?.Invoke(planetInfo); 
             }
+            
+            planetInfo.TriggerDestroy();
         }
         else
         {
-            Debug.Log("Луч не попал ни в один объект.");
+            OnPlanetSelected?.Invoke(null); 
         }
     }
 }

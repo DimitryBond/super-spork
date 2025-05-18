@@ -29,9 +29,8 @@ namespace DefaultNamespace
             {
                 return result;
             }
-
-            Debug.LogWarning($"Диалог с ID '{id}' не найден.");
-            return new[] { "..." };
+            
+            throw new Exception($"Dialogue ID {id} not found");
         }
 
         public string[] GetHints(string id)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,6 +42,7 @@ namespace DefaultNamespace
 
         public void ShowDialogue(string[] messages)
         {
+            introText.text = "";
             currentMessages = messages;
             currentMessageIndex = 0;
             isShowingMessages = true;
@@ -111,6 +113,7 @@ namespace DefaultNamespace
             onComplete?.Invoke();
         }
 
+        public event Action OnDialogFinished;
         private void ShowNextMessage()
         {
             currentMessageIndex++;
@@ -122,7 +125,7 @@ namespace DefaultNamespace
             else
             {
                 HideMessage();
-                GameManager.Instance.StartTask();
+                OnDialogFinished?.Invoke();
             }
         }
     }

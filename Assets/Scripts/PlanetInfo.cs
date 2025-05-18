@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class PlanetInfo : MonoBehaviour
 {
-    public string planetName; // Имя планеты
+    public string PlanetName;
+    public string PlanetTargetDescription;
 
     public bool IsTarget { get; set; }
-    public string GetPlanetName()
+
+    public void TriggerDestroy()
     {
-        return planetName;
+        Destroy(gameObject);
     }
 }

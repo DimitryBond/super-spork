@@ -4,6 +4,7 @@ using System.Linq;
 using AYellowpaper.SerializedCollections;
 using DefaultNamespace;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
 {
@@ -16,14 +17,26 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
     [SerializeField] private HintSystem hintSystem;
     [SerializeField] private TargetPlanetData targetPlanetData;
     [SerializeField] private DialogueData dialogueDatabase;
-
+    
     private int currentRound = 0;
     private PlanetInfo currentTargetPlanet;
+    public PlanetInfo CurrentTargetPlanet => currentTargetPlanet;
     private List<PlanetInfo> allPlanets = new();
-
+    
+    public event Action<int> OnHealthChanged;
+    private int health;
+    public int Health
+    {
+        get => health;
+        set
+        {
+            health = value;
+            OnHealthChanged?.Invoke(value);
+        }
+    }
+    
     public event Action<bool> OnIsTaskActiveChanged;
     private bool isTaskActive;
-
     public bool IsTaskActive
     {
         get => isTaskActive;
@@ -53,7 +66,6 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
 
     public event Action<Symbol> OnCurrentSymbolChanged;
     private Symbol currentSymbol;
-
     public Symbol CurrentSymbol
     {
         get => currentSymbol;
@@ -66,7 +78,6 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
 
     public event Action<int> OnCurrentTaskChanged;
     private int currentTask;
-
     public int CurrentTask
     {
         get => currentTask;
@@ -79,51 +90,110 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
 
     private void Start()
     {
+        Health = 3;
         crosshairController.Initialize();
         colorKeyBoard.Initialize();
         keyboard.Initialize();
         screen.Initialize();
         canInput = true;
 
-        crosshairController.OnTruePlanetDestroy += OnPlanetShot; // заменили StartTask на OnPlanetShot
+        dialogSystem.OnDialogFinished += StartTask;
+        crosshairController.OnPlanetSelected += OnPlanetShot; // заменили StartTask на OnPlanetShot
         colorKeyBoard.OnKeyPressed += TryCompleteSymbol;
         keyboard.OnKeyPressed += TryCompleteSymbol;
-
-        dialogSystem.ShowDialogue(dialogueDatabase.GetDialogue("task_0"));
-        IsTaskActive = true;
         
-        SetupTargetPlanet(); // задаём первую цель
+        var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+        dialogSystem.ShowDialogue(messages);
     }
 
     public event Action OnTaskStarted;
     public void StartTask()
     {
+        SetupTargetPlanet();
         CurrentTaskSymbols.Clear();
         CurrentTaskSymbols = tasks[CurrentTask].Symbols.ToList();
         CurrentSymbol = CurrentTaskSymbols[0];
         CurrentSymbolIndex = 0;
         OnTaskStarted?.Invoke();
-
-        var hints = dialogueDatabase.GetHints($"task_{CurrentTask}");
+        
+        var hints = dialogueDatabase.GetHints($"hint_{CurrentTask}");
         hintSystem.ShowHints(hints);
+        IsTaskActive = true;
     }
 
     public event Action OnTaskFinished;
-    public void CompleteTask()
+    public void CompleteTask(bool planetWasDestroy)
     {
+        if (planetWasDestroy)
+        {
+            var dialog = dialogueDatabase.GetDialogue($"{currentTargetPlanet.PlanetName}_Destroy");
+            dialogSystem.ShowDialogue(dialog);
+            
+            if (CurrentTask == 1)
+            {
+                var messages = dialog.Concat(dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task"))).ToArray();
+                dialogSystem.ShowDialogue(messages);
+            }
+            else if (CurrentTask == 2)
+            {
+                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                dialogSystem.ShowDialogue(messages);
+            }
+            else if (CurrentTask == 3)
+            {
+                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                dialogSystem.ShowDialogue(messages);
+            }
+            else if (CurrentTask == 4)
+            {
+                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                dialogSystem.ShowDialogue(messages);
+            }
+            //конец игры
+            else if (CurrentTask == 5)
+            {
+                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                dialogSystem.ShowDialogue(messages);
+            }
+        }
+        else
+        {
+            var id = $"Health={health}";
+            var dialog = dialogueDatabase.GetDialogue(id);
+            dialogSystem.ShowDialogue(dialog);
+            
+            if (CurrentTask == 1)
+            {
+                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                dialogSystem.ShowDialogue(messages);
+            }
+            else if (CurrentTask == 2)
+            {
+                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                dialogSystem.ShowDialogue(messages);
+            }
+            else if (CurrentTask == 3)
+            {
+                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                dialogSystem.ShowDialogue(messages);
+            }
+            else if (CurrentTask == 4)
+            {
+                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                dialogSystem.ShowDialogue(messages);
+            }
+            //конец игры
+            else if (CurrentTask == 5)
+            {
+                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                dialogSystem.ShowDialogue(messages);
+            }
+        }
+        
         CurrentTask++;
         hintSystem.HideHints();
         IsTaskActive = false;
         OnTaskFinished?.Invoke();
-    }
-
-    public void NextDialogue()
-    {
-        if (IsTaskActive) return;
-
-        string id = $"task_{CurrentTask}";
-        var dialogue = dialogueDatabase.GetDialogue(id);
-        dialogSystem.ShowDialogue(dialogue);
     }
 
     public void TriggerEndingDialogue(string endingId)
@@ -134,12 +204,13 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
         dialogSystem.ShowDialogue(dialogue);
     }
 
+    public event Action OnStringTaskFinished;
     private void NextSymbol()
     {
         CurrentSymbolIndex++;
         if (CurrentSymbolIndex >= CurrentTaskSymbols.Count)
         {
-            CompleteTask();
+            OnStringTaskFinished?.Invoke();
         }
         else
         {
@@ -149,7 +220,6 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
 
     public event Action<int> OnCompleted;
     public event Action<int> OnDenied;
-
     private void TryCompleteSymbol(Symbols symbol)
     {
         if (!canInput) return;
@@ -176,49 +246,32 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
             planet.IsTarget = false;
         }
 
-        string targetName = targetPlanetData.GetTargetPlanetName(currentRound);
-        currentTargetPlanet = allPlanets.Find(p => p.planetName == targetName);
-
-        if (currentTargetPlanet != null)
-        {
-            currentTargetPlanet.IsTarget = true;
-            Debug.Log($"Раунд {currentRound + 1}: Цель — {currentTargetPlanet.planetName}");
-        }
-        else
-        {
-            Debug.LogError($"Не найдена планета с именем: {targetName}");
-        }
+        var randomIndex = Random.Range(0, allPlanets.Count);
+        currentTargetPlanet = allPlanets[randomIndex];
+        currentTargetPlanet.IsTarget = true;
     }
     
     private void OnPlanetShot(PlanetInfo hitPlanet)
     {
+        //Не попал
         if (hitPlanet == null)
         {
-            Debug.Log("Промах — объект не планета.");
+            Health--;
+            CompleteTask(false);
             return;
         }
 
+        //Попал куда надо
         if (hitPlanet == currentTargetPlanet)
         {
-            Debug.Log($"Попал в нужную планету: {hitPlanet.planetName}");
-
-            currentRound++;
-            if (currentRound < targetPlanetData.TotalRounds)
-            {
-                SetupTargetPlanet();
-                dialogSystem.ShowDialogue(dialogueDatabase.GetDialogue($"task_{currentRound}"));
-
-            }
-            else
-            {
-                Debug.Log("Игра завершена! Все раунды пройдены.");
-                TriggerEndingDialogue("ending_success");
-            }
+            CompleteTask(true);
         }
+        //Попал куда НЕ надо
         else
         {
-            Debug.Log($"Ошибка. Попал в {hitPlanet.planetName}, а нужно было {currentTargetPlanet.planetName}");
-            TriggerEndingDialogue("ending_fail");
+            Health--;
+            CompleteTask(false);
+            //TriggerEndingDialogue("ending_fail");
         }
     }
 }
