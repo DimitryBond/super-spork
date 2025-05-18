@@ -101,7 +101,6 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
         crosshairController.OnPlanetSelected += OnPlanetShot; // заменили StartTask на OnPlanetShot
         colorKeyBoard.OnKeyPressed += TryCompleteSymbol;
         keyboard.OnKeyPressed += TryCompleteSymbol;
-        keyboard.OnRestartKeyPressed += RestartStringTask;
         
         var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
         dialogSystem.ShowDialogue(messages);
@@ -114,6 +113,7 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
         CurrentTaskSymbols = tasks[CurrentTask].Symbols.ToList();
         CurrentSymbol = CurrentTaskSymbols[0];
         CurrentSymbolIndex = 0;
+        canInput = true;
         OnStringTaskRestarted?.Invoke();
     }
 
@@ -233,6 +233,8 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
     public event Action<int> OnDenied;
     private void TryCompleteSymbol(Symbols symbol)
     {
+        if (!canInput) return;
+
         if (CurrentSymbol.ThisSymbol == symbol)
         {
             CurrentSymbol.Complete();
@@ -241,9 +243,8 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
         }
         else
         {
-            CurrentSymbol.Deny();
-            OnDenied?.Invoke(CurrentSymbolIndex);
-            canInput = false;
+            Debug.Log("НЕТ");
+            //звук отклонения
         }
     }
     private void SetupTargetPlanet()
