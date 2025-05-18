@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class KeyBoard : MonoBehaviour
 {
-    [SerializeField] private RestartKey restartKey;
     [SerializeField] private ShiftKey shiftKey;
     [SerializeField] private List<Key> keys = new();
     
@@ -39,7 +38,6 @@ public class KeyBoard : MonoBehaviour
         }
         
         shiftKey.OnKeyPressed += ToggleShift;
-        restartKey.OnKeyPressed += InvokeOnRestartKeyPressed;
     }
 
     private void ToggleShift()
@@ -50,11 +48,5 @@ public class KeyBoard : MonoBehaviour
     private void InvokeOnKeyPressed(Symbols symbol)
     {
         OnKeyPressed?.Invoke(symbol);
-    }
-    
-    public event Action OnRestartKeyPressed;
-    private void InvokeOnRestartKeyPressed()
-    {
-        OnRestartKeyPressed?.Invoke();
     }
 }

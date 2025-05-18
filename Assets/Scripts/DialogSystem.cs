@@ -16,6 +16,8 @@ namespace DefaultNamespace
         private bool isShowingMessages = false;
         private Coroutine typingCoroutine;
 
+        private bool canTouch;
+        
         [SerializeField] private float typingSpeed = 0.05f;      // Скорость печати текста (сек на символ)
         [SerializeField] private float fadeDuration = 0.5f;      // Время плавного появления/исчезновения
         
@@ -27,6 +29,7 @@ namespace DefaultNamespace
 
             if (Input.GetMouseButtonDown(0))
             {
+                if (!canTouch) return;
                 if (typingCoroutine != null)
                 {
                     StopCoroutine(typingCoroutine);
@@ -42,6 +45,7 @@ namespace DefaultNamespace
 
         public void ShowDialogue(string[] messages)
         {
+            canTouch = true;
             introText.text = "";
             currentMessages = messages;
             currentMessageIndex = 0;
@@ -85,6 +89,7 @@ namespace DefaultNamespace
 
         private void HideMessage()
         {
+            canTouch = false;
             StartCoroutine(FadeCanvas(1f, 0f, fadeDuration, () => {
                 isShowingMessages = false;
             }));

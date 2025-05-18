@@ -11,6 +11,7 @@ public class CompleteIndicator : MonoBehaviour
     [SerializeField] private Sprite offed;
     
     private SymbolSlot symbolSlot;
+    private bool canSwitchState = true;
 
     public void Initialize(SymbolSlot slot)
     {
@@ -32,10 +33,9 @@ public class CompleteIndicator : MonoBehaviour
 
     public void UpdateState(int index)
     {
-        if (index <= GameManager.Instance.CurrentSymbolIndex && symbolSlot.SymbolInSlot.IsCompleted)
-        {
-        }
-        else if (index == GameManager.Instance.CurrentSymbolIndex)
+        if (!canSwitchState) return;
+        
+        if (index == GameManager.Instance.CurrentSymbolIndex)
         {
             image.sprite = waiting;
         }
@@ -50,6 +50,7 @@ public class CompleteIndicator : MonoBehaviour
         if (isCompleted)
         {
             image.sprite = complete;
+            canSwitchState = false;
         }
     }
     
@@ -58,6 +59,7 @@ public class CompleteIndicator : MonoBehaviour
         if (isDenied)
         {
             image.sprite = denied;
+            canSwitchState = false;
         }
     }
 }

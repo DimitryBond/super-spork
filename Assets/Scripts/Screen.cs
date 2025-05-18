@@ -15,7 +15,7 @@ public class Screen : MonoBehaviour
     {
         GameManager.Instance.OnTaskStarted += StartTask;
         GameManager.Instance.OnStringTaskFinished += FinishTask;
-        GameManager.Instance.OnStringTaskFinished += ClearScreen;
+        GameManager.Instance.OnStringTaskRestarted += ClearScreen;
     }
     
     private void StartTask()
@@ -54,6 +54,7 @@ public class Screen : MonoBehaviour
             Destroy(slot.gameObject);
         }
         symbolSlots.Clear();
+        Debug.Log("Удалил");
         
         symbols = GameManager.Instance.CurrentTaskSymbols;
         for (int i = 0; i < symbols.Count; i++)
@@ -62,5 +63,6 @@ public class Screen : MonoBehaviour
             instance.Initialize(symbols[i], i);
             symbolSlots.Add(instance);
         }
+        Debug.Log("Восстановил новые");
     }
 }
