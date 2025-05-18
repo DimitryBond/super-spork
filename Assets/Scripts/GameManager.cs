@@ -18,8 +18,8 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
     [SerializeField] private DialogueData dialogueDatabase;
     [SerializeField] private PlanetInfo enemyShip;
 
-    private bool allTasksCompleted;
-    private bool playerWasDestroy;
+    public bool AllTasksCompleted { get; set; }
+    public bool PlayerWasDestroy { get; set; }
     public bool PlayerDestroyCommander { get; set; }
     
     private int currentRound = 0;
@@ -48,7 +48,7 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
         }
         if (Health == 0)
         {
-            playerWasDestroy = true;
+            PlayerWasDestroy = true;
         }
     }
     
@@ -137,12 +137,12 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
     public event Action OnTaskStarted;
     public void StartTask()
     {
-        if (allTasksCompleted)
+        if (AllTasksCompleted)
         {
             Debug.Log("КОНЦОВКА - ВСЕ ЗАДАНИЯ ВЫПОЛНЕНЫ");
             return;
         }
-        else if (playerWasDestroy)
+        else if (PlayerWasDestroy)
         {
             Debug.Log("КОНЦОВКА - ИГРОК БЫЛ УНИЧТОЖЕН");
             return;
@@ -195,7 +195,7 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
             }
             else if (CurrentTask == 4)
             {
-                allTasksCompleted = true;
+                AllTasksCompleted = true;
                 var messages = dialog.Concat(dialogueDatabase.GetDialogue("GoodFinal")).ToArray();
                 dialogSystem.ShowDialogue(messages);
             }
@@ -236,7 +236,7 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
             }
             else if (CurrentTask == 4)
             {
-                allTasksCompleted = true;
+                AllTasksCompleted = true;
                 var messages = dialog.Concat(dialogueDatabase.GetDialogue("GoodFinal")).ToArray();
                 dialogSystem.ShowDialogue(messages);
             }
@@ -327,7 +327,6 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
             var messages = dialogueDatabase.GetDialogue("CommandDestroyFinal");
             dialogSystem.ShowDialogue(messages);
             PlayerDestroyCommander = true;
-            StartTask();
             return;
         }
 

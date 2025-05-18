@@ -470,17 +470,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &934565374 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3103136932710026550, guid: 105c3fed42aad8448bc28da1813e95a5, type: 3}
-  m_PrefabInstance: {fileID: 1279205145}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784de5f431228ec41be474f731e755c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &940160309
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,6 +795,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f8b8eb0704b47d7ab3b4a41d046c5fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1231800979 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1112083612521425170, guid: 105c3fed42aad8448bc28da1813e95a5, type: 3}
+  m_PrefabInstance: {fileID: 1279205145}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 784de5f431228ec41be474f731e755c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1279205145
@@ -1566,7 +1566,7 @@ PrefabInstance:
     - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
       propertyPath: enemyShip
       value: 
-      objectReference: {fileID: 934565374}
+      objectReference: {fileID: 1231800979}
     - target: {fileID: 4306870999330826066, guid: 6947b46e8e701ce44a66f91f272d8703, type: 3}
       propertyPath: hintSystem
       value: 
