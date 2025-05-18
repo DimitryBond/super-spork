@@ -17,11 +17,13 @@ namespace DefaultNamespace
         private Coroutine typingCoroutine;
 
         private bool canTouch;
-        
-        [SerializeField] private float typingSpeed = 0.05f;      // Скорость печати текста (сек на символ)
-        [SerializeField] private float fadeDuration = 0.5f;      // Время плавного появления/исчезновения
-        
+
+        [SerializeField] private float typingSpeed = 0.05f; // Скорость печати текста (сек на символ)
+        [SerializeField] private float fadeDuration = 0.5f; // Время плавного появления/исчезновения
+
         [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip[] randomSounds;
+        [SerializeField] private Animator animator;
 
         private void Update()
         {
@@ -55,23 +57,29 @@ namespace DefaultNamespace
 
             audioSource.Stop();
 
-            StartCoroutine(ShowDialogueSequence()); 
+            StartCoroutine(ShowDialogueSequence());
         }
 
         private IEnumerator ShowDialogueSequence()
         {
-            yield return StartCoroutine(FadeCanvas(0f, 1f, fadeDuration, null)); 
+            yield return StartCoroutine(FadeCanvas(0f, 1f, fadeDuration, null));
 
-            ShowMessage(currentMessages[currentMessageIndex]); 
+            ShowMessage(currentMessages[currentMessageIndex]);
         }
-
 
 
         private void ShowMessage(string message)
         {
+            var randomIndex = UnityEngine.Random.Range(0, randomSounds.Length);
+            audioSource.clip = randomSounds[randomIndex];
             audioSource.Play();
+
+            animator.SetBool("Talk", true);
             if (typingCoroutine != null)
+            {
+                audioSource.Stop();
                 StopCoroutine(typingCoroutine);
+            }
 
             typingCoroutine = StartCoroutine(TypeText(message));
         }
@@ -84,15 +92,17 @@ namespace DefaultNamespace
                 introText.text += c;
                 yield return new WaitForSeconds(typingSpeed);
             }
+
             typingCoroutine = null;
+
+            if (audioSource.isPlaying) audioSource.Stop();
+            animator.SetBool("Talk", false);
         }
 
         private void HideMessage()
         {
             canTouch = false;
-            StartCoroutine(FadeCanvas(1f, 0f, fadeDuration, () => {
-                isShowingMessages = false;
-            }));
+            StartCoroutine(FadeCanvas(1f, 0f, fadeDuration, () => { isShowingMessages = false; }));
         }
 
         private IEnumerator FadeCanvas(float startAlpha, float endAlpha, float duration, System.Action onComplete)
@@ -119,12 +129,15 @@ namespace DefaultNamespace
         }
 
         public event Action OnDialogFinished;
+
         private void ShowNextMessage()
         {
             currentMessageIndex++;
 
             if (currentMessageIndex < currentMessages.Length)
             {
+                audioSource.Stop();
+                animator.SetBool("Talk", false);
                 ShowMessage(currentMessages[currentMessageIndex]);
             }
             else
