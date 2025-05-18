@@ -12,9 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu 1.unity
     guid: 65f442702c65596409fc53769909fdc3
   - enabled: 1
-    path: Assets/Scenes/Titri.unity
-    guid: 44d9f57ad31013e40b9f3aedc83256df
-  - enabled: 1
     path: Assets/Scenes/Game Dima23.unity
     guid: 2c977450caf840940ac67144fd9489f2
+  - enabled: 1
+    path: Assets/Scenes/Titri.unity
+    guid: 44d9f57ad31013e40b9f3aedc83256df
   m_configObjects: {}

@@ -18,6 +18,7 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
     [SerializeField] private HintSystem hintSystem;
     [SerializeField] private DialogueData dialogueDatabase;
     [SerializeField] private PlanetInfo enemyShip;
+    [SerializeField] private AudioSource errorSound;
 
     public bool AllTasksCompleted { get; set; }
     public bool PlayerWasDestroy { get; set; }
@@ -302,6 +303,7 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
         {
             Debug.Log("НЕТ");
             //звук отклонения
+            errorSound.PlayOneShot(errorSound.clip);
         }
     }
     private void SetupTargetPlanet()
