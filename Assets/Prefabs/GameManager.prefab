@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4775378628648366537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4168411945701130880}
+  - component: {fileID: 4306870999330826066}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4168411945701130880
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4775378628648366537}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4306870999330826066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4775378628648366537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14aea39eab5d4f5a916b732a342380db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tasks:
+    _serializedList:
+    - Key: 0
+      Value:
+        TaskId: 0
+        Symbols:
+        - symbol: 0
+          isHideSymbol: 0
+        - symbol: 0
+          isHideSymbol: 0
+        - symbol: 0
+          isHideSymbol: 0
+        TaskDescription: 
+    - Key: 1
+      Value:
+        TaskId: 1
+        Symbols:
+        - symbol: 0
+          isHideSymbol: 0
+        - symbol: 1
+          isHideSymbol: 0
+        - symbol: 0
+          isHideSymbol: 0
+        TaskDescription: 
+    - Key: 2
+      Value:
+        TaskId: 2
+        Symbols:
+        - symbol: 0
+          isHideSymbol: 0
+        - symbol: 0
+          isHideSymbol: 0
+        - symbol: 0
+          isHideSymbol: 0
+        TaskDescription: 
+  crosshairController: {fileID: 0}
+  keyboard: {fileID: 0}
+  colorKeyBoard: {fileID: 0}
+  screen: {fileID: 0}
+  dialogSystem: {fileID: 0}
+  hintSystem: {fileID: 0}
+  dialogueDatabase: {fileID: 11400000, guid: 93ecf3b857f6efb438060640915cfff9, type: 2}

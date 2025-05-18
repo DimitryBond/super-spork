@@ -100,9 +100,20 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
         crosshairController.OnPlanetSelected += OnPlanetShot; // заменили StartTask на OnPlanetShot
         colorKeyBoard.OnKeyPressed += TryCompleteSymbol;
         keyboard.OnKeyPressed += TryCompleteSymbol;
+        keyboard.OnRestartKeyPressed += RestartStringTask;
         
         var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
         dialogSystem.ShowDialogue(messages);
+    }
+
+    public event Action OnStringTaskRestarted;
+    private void RestartStringTask()
+    {
+        CurrentTaskSymbols.Clear();
+        CurrentTaskSymbols = tasks[CurrentTask].Symbols.ToList();
+        CurrentSymbol = CurrentTaskSymbols[0];
+        CurrentSymbolIndex = 0;
+        OnStringTaskRestarted?.Invoke();
     }
 
     public event Action OnTaskStarted;
@@ -130,29 +141,27 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
             
             if (CurrentTask == 1)
             {
-                var messages = dialog.Concat(dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task"))).ToArray();
+                var messages = dialog.Concat(dialogueDatabase.GetDialogue("TaskWithShift").Concat(dialogueDatabase.GetDialogue("Task"))).ToArray();
                 dialogSystem.ShowDialogue(messages);
             }
             else if (CurrentTask == 2)
             {
-                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                var messages = dialog.Concat(dialogueDatabase.GetDialogue("TaskWithColor").Concat(dialogueDatabase.GetDialogue("TaskWithHints")).Concat(dialogueDatabase.GetDialogue("Task"))) .ToArray();
                 dialogSystem.ShowDialogue(messages);
             }
             else if (CurrentTask == 3)
             {
-                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                var messages = dialog.Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
                 dialogSystem.ShowDialogue(messages);
             }
             else if (CurrentTask == 4)
             {
-                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
+                var messages = dialog.Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
                 dialogSystem.ShowDialogue(messages);
             }
             //конец игры
             else if (CurrentTask == 5)
             {
-                var messages = dialogueDatabase.GetDialogue("Start").Concat(dialogueDatabase.GetDialogue("Task")).ToArray();
-                dialogSystem.ShowDialogue(messages);
             }
         }
         else
@@ -221,8 +230,6 @@ public class GameManager : DontDestroyOnLoadMonoSingleton<GameManager>
     public event Action<int> OnDenied;
     private void TryCompleteSymbol(Symbols symbol)
     {
-        if (!canInput) return;
-
         if (CurrentSymbol.ThisSymbol == symbol)
         {
             CurrentSymbol.Complete();

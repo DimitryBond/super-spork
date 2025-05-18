@@ -15,6 +15,7 @@ public class Screen : MonoBehaviour
     {
         GameManager.Instance.OnTaskStarted += StartTask;
         GameManager.Instance.OnStringTaskFinished += FinishTask;
+        GameManager.Instance.OnStringTaskFinished += ClearScreen;
     }
     
     private void StartTask()
@@ -43,5 +44,23 @@ public class Screen : MonoBehaviour
             Destroy(slot.gameObject);
         }
         symbolSlots.Clear();
+    }
+    
+    private void ClearScreen()
+    {
+        symbols.Clear();
+        foreach (var slot in symbolSlots)
+        {
+            Destroy(slot.gameObject);
+        }
+        symbolSlots.Clear();
+        
+        symbols = GameManager.Instance.CurrentTaskSymbols;
+        for (int i = 0; i < symbols.Count; i++)
+        {
+            var instance = Instantiate(symbolSlotPrefab, contentTransform);
+            instance.Initialize(symbols[i], i);
+            symbolSlots.Add(instance);
+        }
     }
 }
