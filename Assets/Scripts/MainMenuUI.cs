@@ -10,7 +10,8 @@ public class MainMenuUI : MonoBehaviour
     private void Start()
     {
         var a = FindObjectOfType<GameManager>();
-        Destroy(a.gameObject);
+        if (a != null)
+            Destroy(a.gameObject);
     }
 
     public void StartGame()
