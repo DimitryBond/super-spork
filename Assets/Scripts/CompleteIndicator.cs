@@ -5,10 +5,10 @@ public class CompleteIndicator : MonoBehaviour
 {
     [SerializeField] private Image image;
     
-    [SerializeField] private Sprite complete;
-    [SerializeField] private Sprite waiting;
-    [SerializeField] private Sprite denied;
-    [SerializeField] private Sprite offed;
+    [SerializeField] private Color complete;
+    [SerializeField] private Color waiting;
+    [SerializeField] private Color denied;
+    [SerializeField] private Color offed;
     
     private SymbolSlot symbolSlot;
     private bool canSwitchState = true;
@@ -37,11 +37,11 @@ public class CompleteIndicator : MonoBehaviour
         
         if (index == GameManager.Instance.CurrentSymbolIndex)
         {
-            image.sprite = waiting;
+            image.color = waiting;
         }
         else if (index > GameManager.Instance.CurrentSymbolIndex)
         {
-            image.sprite = offed;
+            image.color = offed;
         }
     }
 
@@ -49,7 +49,7 @@ public class CompleteIndicator : MonoBehaviour
     {
         if (isCompleted)
         {
-            image.sprite = complete;
+            image.color = complete;
             canSwitchState = false;
         }
     }
@@ -58,7 +58,7 @@ public class CompleteIndicator : MonoBehaviour
     {
         if (isDenied)
         {
-            image.sprite = denied;
+            image.color = denied;
             canSwitchState = false;
         }
     }
