@@ -18,7 +18,7 @@ public class MainMenuUI : MonoBehaviour
         button.interactable = false;
         MusicManager.Instance.SetFadeOutMusic(true);
         MusicManager.Instance.StopMusic();
-        SceneManager.LoadScene("Game Dima2");
+        SceneManager.LoadScene("Game Dima23");
         MusicManager.Instance.SetFadeOutMusic(true);
     }
 

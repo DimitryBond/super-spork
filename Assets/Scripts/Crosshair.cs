@@ -3,7 +3,7 @@ using UnityEngine;
 public class Crosshair : MonoBehaviour
 {
     private Vector3 targetPosition;
-    private float moveSpeed = 5f;
+    private float moveSpeed = 3.5f;
 
     private void Start()
     {
